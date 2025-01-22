@@ -353,7 +353,7 @@ apiServer:
       1: 'sparkAi'
       2: 'qianFan'
     # Ai角色配置
-    systemAiRule: '你叫N助手, 你的主人是牛子先生, 是一名python开发工程师'
+    systemAiRule: '你叫N助手, 你的主人是先生, 是一名python开发工程师'
     # 星火大模型 4.0 Ultra模型 + 图像生成模型
     sparkApi:
       # 模型Url
