@@ -195,27 +195,30 @@ class HappyFunction:
 
         def djss():
             # 短剧搜索
-            if judgeSplitAllEqualWord(content, self.shortPlayWords):
-                playName = content.split(' ')[-1]
-                content = self.Ams.getShortPlay(playName)
-                if content:
-                    self.wcf.send_text(f'@{senderName}\n{content}', receiver=roomId, aters=sender)
+            playName = content.split(' ')[-1]
+            content = self.Ams.getShortPlay(playName)
+            if content:
+                self.wcf.send_text(f'@{senderName}\n{content}', receiver=roomId, aters=sender)
 
         def dyspjx():
             # 抖音视频解析
-            if judgeInWord(content, '复制打开抖音'):
-                videoPath = self.Ams.getVideoAnalysis(content)
-                if videoPath:
-                    self.wcf.send_file(path=videoPath, receiver=roomId)
+            file_path, file_type = self.Ams.getVideoAnalysis(content)
+            if file_path and file_type:
+                if file_type == "video":
+                    self.wcf.send_file(path=file_path, receiver=roomId)
+                if file_type == "image":
+                    for img in file_path:
+                        self.wcf.send_file(path=img, receiver=roomId)
+                if file_type == "text":
+                    self.wcf.send_text(f'@{senderName}\n{file_path}', receiver=roomId, aters=sender)
 
         def tlp():
-                if judgeEqualListWord(content, self.taLuoWords):
-                    content, picPath = self.Ams.getTaLuo()
-                    if content and picPath:
-                        self.wcf.send_image(path=picPath, receiver=roomId)
-                        self.wcf.send_text(f'@{senderName}\n\n{content}', receiver=roomId, aters=sender)
-                    else:
-                        self.wcf.send_text(f'@{senderName}\n塔罗牌占卜接口出现错误, 请联系超管查看控制台输出 ~~~', receiver=roomId, aters=sender)
+                content, picPath = self.Ams.getTaLuo()
+                if content and picPath:
+                    self.wcf.send_image(path=picPath, receiver=roomId)
+                    self.wcf.send_text(f'@{senderName}\n\n{content}', receiver=roomId, aters=sender)
+                else:
+                    self.wcf.send_text(f'@{senderName}\n塔罗牌占卜接口出现错误, 请联系超管查看控制台输出 ~~~', receiver=roomId, aters=sender)
 
         def sjbq():
             # 随机表情
@@ -328,6 +331,9 @@ class HappyFunction:
             for task in TASK:
                 if content in task['keyword']:
                     task['func']()
+            for i in ["复制打开抖音", "复制本条信息，打开【小红书】App查看精彩内容！", "打开抖音搜索"]:
+                if i in content:
+                    dyspjx()
         elif msgType == 49:
             objectId, objectNonceId = getWechatVideoData(content)
             if objectId and objectNonceId:

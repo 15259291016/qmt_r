@@ -1,7 +1,7 @@
 ## 超级管理员配置
 Administrators:
-  - 'wxid_ep8bhx9d5j7l21'
-
+  - 'wxid_gcmwzu4to30422'
+#  'wxid_ep8bhx9d5j7l21'#打螺丝
 ## 系统配置
 systemConfig:
   # 版权信息
@@ -306,6 +306,7 @@ functionKeyWord:
   # 群聊发言榜
   speechListWord:
     - '发言榜'
+    - '今日发言'
   # 划水榜
   rowingListWord:
     - '潜水榜'
@@ -333,7 +334,7 @@ apiServer:
     txKey: ''
     # DpApi Key
     # https://api.dudunas.top/
-    dpKey: ''
+    dpKey: '239baa2643babe4334649d3cac111bd3'
 
 
   aiConfig:

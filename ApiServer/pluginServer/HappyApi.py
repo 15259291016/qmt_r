@@ -7,8 +7,7 @@ import asyncio
 import random
 import time
 import os
-import re
-
+import json
 
 class HappyApi:
     def __init__(self):
@@ -110,20 +109,45 @@ class HappyApi:
         """
         op(f'[*]: 正在调用视频解析去水印API接口... ....')
         try:
-            douUrl = re.search(r'(https?://[^\s]+)', videoText).group()
-            jsonData = requests.get(self.dpVideoAnalysisApi.format(self.dpKey, douUrl), verify=True).json()
-            code = jsonData.get('code')
-            if code == 200:
-                videoData = jsonData.get('data')
-                videoUrl = videoData.get('video_url')
+            url = "http://127.0.0.1:8000/短视频爬虫"
+
+            payload = json.dumps({
+                "info": videoText
+            })
+            headers = {
+                'User-Agent': 'Apifox/1.0.0 (https://apifox.com)',
+                'Content-Type': 'application/json',
+                'Accept': '*/*',
+                'Host': '127.0.0.1:8000',
+                'Connection': 'keep-alive'
+            }
+
+            response = requests.request("POST", url, headers=headers, data=payload)
+
+            data = json.loads(response.text)
+            videoData = data.get('data')
+            info_type = videoData.get('type')
+            if info_type == 'video':
+                videoUrl = videoData.get('videourl')
                 savePath = Fcs.returnVideoCacheFolder() + '/' + str(int(time.time() * 1000)) + '.mp4'
                 savePath = self.downloadFile(videoUrl, savePath)
                 if savePath:
-                    return savePath
-            return None
+                    return savePath, info_type
+            elif info_type == 'image':
+                imagesurl = videoData.get('imagesurl')
+                savePath_list = []
+                for img in imagesurl:
+                    savePath = Fcs.returnVideoCacheFolder() + '/' + str(int(time.time() * 1000)) + '.jpg'
+                    savePath_list.append(self.downloadFile(img, savePath))
+                if savePath_list:
+                    return savePath_list, info_type
+            elif info_type == 'text':
+                info = videoData.get('info')
+                return info, info_type
+            return None, None
         except Exception as e:
             op(f'[-]: 视频解析去水印API出现错误, 错误信息: {e}')
-            return None
+            return None,None
 
     def getShortPlay(self, playName):
         """

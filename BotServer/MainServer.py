@@ -51,11 +51,11 @@ class MainServer:
                 # op(f'[*]: 接收到消息: {msg}')
                 op(f'[*]: 接收到消息\n[*]: 群聊ID: {msg.roomid}\n[*]: 发送人ID: {msg.sender}\n[*]: 发送内容: {msg.content}\n--------------------')
                 # 群聊消息处理
-                if '@chatroom' in msg.roomid and msg.roomid in ['57471680941@chatroom', '57240198127@chatroom',
-                                                                '38886199012@chatroom',
-                                                                "48302252369@chatroom","34494414197@chatroom"]:
-                    # 承诺不打游戏，前端交流群，gp交流群，赚钱大业,跑步干饭小分队
-                    # if '@chatroom' in msg.roomid:
+                # if '@chatroom' in msg.roomid and msg.roomid in ['57471680941@chatroom', '57240198127@chatroom',
+                #                                                 '38886199012@chatroom',
+                #                                                 "48302252369@chatroom", "34494414197@chatroom"]:
+                # 承诺不打游戏，前端交流群，gp交流群，赚钱大业,跑步干饭小分队
+                if '@chatroom' in msg.roomid:
                     Thread(target=self.Rmh.mainHandle, args=(msg,)).start()
                 # 好友消息处理
                 # if '@chatroom' not in msg.roomid and 'gh_' not in msg.sender:
