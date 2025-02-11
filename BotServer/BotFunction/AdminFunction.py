@@ -24,6 +24,9 @@ class AdminFunction:
         self.delUserKeyWords = configData['adminFunctionWord']['delUserWord']
         self.addPointKeyWords = configData['pointConfig']['addPointWord']
         self.delPointKeyWords = configData['pointConfig']['delPointWord']
+        self.addUserFeatureKeyWord = configData['userFeatureWord']['addUserFeatureWord']
+        self.delUserFeatureKeyWord = configData['userFeatureWord']['delUserFeatureWord']
+        self.searchUserFeatureKeyWord = configData['userFeatureWord']['searchUserFeatureWord']
 
     def mainHandle(self, message):
         content = message.content.strip()
@@ -105,6 +108,19 @@ class AdminFunction:
                         self.wcf.send_text(
                             f'@{self.wcf.get_alias_in_chatroom(sender, roomId)} [{self.wcf.get_alias_in_chatroom(atWxId, roomId)}] 移出群聊失败',
                             receiver=roomId, aters=sender)
+            key_word = content.split(",")[0]
+            if judgeEqualListWord(key_word, self.addUserFeatureKeyWord):
+                name = content.split(",")[1]
+                description = content.split(",")[-1]
+                if self.Dms.Dus.addFeature(name, description):
+                    self.wcf.send_text(f'@{senderName} 增加用户功能:*{name}*成功!!!', receiver=roomId, aters=sender)
+            elif judgeEqualListWord(content, self.delUserFeatureKeyWord):
+                name = content.split(",")[1]
+                if self.Dms.Dus.delFeature(name):
+                    self.wcf.send_text(f'@{senderName} 删除用户功能:*{name}*成功!!!', receiver=roomId, aters=sender)
+            elif judgeEqualListWord(content, self.searchUserFeatureKeyWord):
+                if self.Dms.Dus.searchFeature():
+                    self.wcf.send_text(f'@{senderName} 查询用户功能:*{content}*成功!!!', receiver=roomId, aters=sender)
             # # 添加黑名单公众号 阉割
             # elif judgeEqualListWord(content, self.addBlackGhKeyWords):
             #     pass

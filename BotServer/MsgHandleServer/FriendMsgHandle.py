@@ -55,6 +55,7 @@ class FriendMsgHandle:
         # 好友消息转发给管理员开关
         self.msgForwardAdmin = configData['systemConfig']['msgForwardAdmin']
 
+
     def mainHandle(self, msg):
         content = msg.content.strip()
         sender = msg.sender
@@ -87,6 +88,11 @@ class FriendMsgHandle:
                 Thread(target=self.showBlackGh, args=(sender,)).start()
             # Ai对话 Ai锁功能 对超管没用
             elif self.aiLock or sender in self.Administrators:
+                if "打开回复" in content:
+                    pass
+                if "关闭回复" in content:
+                    pass
+                # if sender in
                 Thread(target=self.getAiMsg, args=(content, sender)).start()
             # 超级管理员发消息转发给好友
             if judgeSplitAllEqualWord(content, self.sendMsgKeyWords):

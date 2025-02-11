@@ -73,10 +73,10 @@ class PointFunction:
                     receiver=roomId,
                     aters=sender)
             # 签到口令提示
-            elif judgeEqualWord(content, '签到'):
-                self.wcf.send_text(
-                    f'@{senderName} 签到失败\n签到口令已改为：{self.signKeyWord}',
-                    receiver=roomId, aters=sender)
+            # elif judgeEqualWord(content, '签到'):
+            #     self.wcf.send_text(
+            #         f'@{senderName} 签到失败\n签到口令已改为：{self.signKeyWord}',
+            #         receiver=roomId, aters=sender)
             # 签到
             elif judgeEqualWord(content, self.signKeyWord):
                 if not self.Dms.sign(wxId=sender, roomId=roomId):

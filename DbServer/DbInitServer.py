@@ -14,10 +14,29 @@ class DbInitServer:
 
 
     def initDb(self, ):
-        # 初始化用户数据库 用户表 管理员表
+        # 初始化用户数据库
         userConn, userCursor = Dds.openDb(self.userDb)
-        Dds.createTable(userCursor, 'User', 'wxId varchar(255), wxName varchar(255)')
+
+        # 启用外键支持（如果是 SQLite）
+        userCursor.execute("PRAGMA foreign_keys = ON")
+        # 用户表（明确主键）
+        Dds.createTable(userCursor, 'User', 'wxId varchar(255) PRIMARY KEY, wxName varchar(255)')
+        # 管理员表
         Dds.createTable(userCursor, 'Admin', 'wxId varchar(255), roomId varchar(255)')
+
+        # 功能表
+        Dds.createTable(userCursor, 'Feature',
+                        'name varchar(255) PRIMARY KEY, description TEXT')
+
+        # 用户功能关联表（修正 featureId 类型）
+        Dds.createTable(userCursor, 'UserFeature', '''
+            wxId varchar(255),
+            featureId INTEGER,
+            enabled BOOLEAN DEFAULT TRUE,
+            FOREIGN KEY (wxId) REFERENCES User(wxId),
+            FOREIGN KEY (featureId) REFERENCES Feature(id)
+        ''')
+
         Dds.closeDb(userConn, userCursor)
 
         # 初始化积分数据库 积分数据表 签到表

@@ -243,6 +243,15 @@ class DbMainServer:
         """
         self.Drs.addWhiteRoom(roomId, roomName)
 
+    def addFeature(self, name, des):
+        return self.Dus.addFeature(name, des)
+
+    def delFeature(self, name):
+        return self.Dus.delFeature(name)
+
+    def searchFeature(self):
+        return self.Dus.searchFeature()
+
     def delWhiteRoom(self, roomId):
         """
         移出白名单群聊

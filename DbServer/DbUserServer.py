@@ -65,3 +65,54 @@ class DbUserServer:
             op(f'[-]: 查询管理员出现错误, 错误信息: {e}')
             Dds.closeDb(conn, cursor)
             return False
+
+    def addFeature(self, name, description):
+        """
+        添加用户功能
+        :param name: 功能名字
+        :param description: 功能解释
+        :return:
+        """
+        conn, cursor = Dds.openDb(Cs.returnUserDbPath())
+        try:
+            if not self.searchFeature(name):
+                cursor.execute(f'INSERT INTO Feature VALUES ({name}, {description})')
+                conn.commit()
+                Dds.closeDb(conn, cursor)
+                return True
+            return False
+        except Exception as e:
+            op(f'[-]: 增加用户功能出现错误, 错误信息: {e}')
+            Dds.closeDb(conn, cursor)
+            return False
+
+    def delFeature(self, name):
+        conn, cursor = Dds.openDb(Cs.returnUserDbPath())
+        try:
+            cursor.execute('DELETE FROM Feature WHERE name=?', (name))
+            conn.commit()
+            Dds.closeDb(conn, cursor)
+            return True
+        except Exception as e:
+            op(f'[-]: 删除用户功能出现错误, 错误信息: {e}')
+            Dds.closeDb(conn, cursor)
+            return False
+
+    def searchFeature(self, name=None):
+        conn, cursor = Dds.openDb(Cs.returnUserDbPath())
+        try:
+            if name == None:
+                sql = f'SELECT name,description FROM Feature'
+            else:
+                sql = f'SELECT name,description FROM Feature where name={name}'
+            cursor.execute(sql)
+            result = cursor.fetchone()
+            Dds.closeDb(conn, cursor)
+            if result:
+                return True
+            else:
+                return False
+        except Exception as e:
+            op(f'[-]: 查询用户功能出现错误, 错误信息: {e}')
+            Dds.closeDb(conn, cursor)
+            return False

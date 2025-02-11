@@ -53,7 +53,7 @@ class RoomMsgHandle:
         roomId = msg.roomid
         sender = msg.sender
         # print('消息类型-----------------------------', msg.type)
-        # 白名单群聊功能
+        # 白名单群聊功能           #仅仅只有拉白的群聊才会监控
         if judgeWhiteRoom(roomId):
             # 超管功能以及管理功能
             self.AdminFunction(msg)
@@ -66,23 +66,23 @@ class RoomMsgHandle:
             # 推送群聊和白名单群聊才可以使用群聊总结功能&撤回消息检测功能&发言排行榜功能&定时推送总结
             Thread(target=self.Rmf.mainHandle, args=(msg,)).start()
         # 黑名单群聊功能
-        elif judgeBlackRoom(roomId):
-            # 超管功能以及管理功能
-            self.AdminFunction(msg)
-            # 超管和管理才能使用娱乐和积分功能
-            # if sender in self.Administrators or judgeAdmin(sender, roomId):
-            #     Thread(target=self.Asf.mainHandle, args=(msg,)).start()
-            #     Thread(target=self.Af.mainHandle, args=(msg,)).start()
-        # 推送群聊功能
-        elif judgePushRoom(roomId):
-            # 超管功能以及管理功能
-            self.AdminFunction(msg)
-            # 入群欢迎
-            Thread(target=self.JoinRoomWelcome, args=(msg,)).start()
-            # 娱乐功能 和 积分功能
-            Thread(target=self.HappyFunction, args=(msg,)).start()
-            # 推送群聊才可以使用群聊总结功能&撤回消息检测功能&发言排行榜功能&定时推送总结
-            Thread(target=self.Rmf.mainHandle, args=(msg, )).start()
+        # elif judgeBlackRoom(roomId):
+        #     # 超管功能以及管理功能
+        #     self.AdminFunction(msg)
+        #     # 超管和管理才能使用娱乐和积分功能
+        #     # if sender in self.Administrators or judgeAdmin(sender, roomId):
+        #     #     Thread(target=self.Asf.mainHandle, args=(msg,)).start()
+        #     #     Thread(target=self.Af.mainHandle, args=(msg,)).start()
+        # # 推送群聊功能
+        # elif judgePushRoom(roomId):
+        #     # 超管功能以及管理功能
+        #     self.AdminFunction(msg)
+        #     # 入群欢迎
+        #     Thread(target=self.JoinRoomWelcome, args=(msg,)).start()
+        #     # 娱乐功能 和 积分功能
+        #     Thread(target=self.HappyFunction, args=(msg,)).start()
+        #     # 推送群聊才可以使用群聊总结功能&撤回消息检测功能&发言排行榜功能&定时推送总结
+        #     Thread(target=self.Rmf.mainHandle, args=(msg, )).start()
         # 普通群聊功能
         else:
             # 超管功能以及管理功能
