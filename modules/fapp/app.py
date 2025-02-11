@@ -12,9 +12,15 @@ import time
 app = FastAPI()
 # ----------------
 短视频_co = ChromiumOptions().auto_port()  # 指定程序每次使用空闲的端口和临时用户文件夹创建浏览器
+<<<<<<< HEAD
 # 短视频_co.headless(True)  # 无头模式
 # 短视频_co.set_argument('--no-sandbox')  # 无沙盒模式
 # 短视频_co.set_argument('--headless=new')  # 无界面系统添加
+=======
+短视频_co.headless(True)  # 无头模式
+短视频_co.set_argument('--no-sandbox')  # 无沙盒模式
+短视频_co.set_argument('--headless=new')  # 无界面系统添加
+>>>>>>> e087e014910e90fe51c437b9f2755d67175880e0
 短视频_page = ChromiumPage(短视频_co)
 短视频_page.get("https://www.xiazaitool.com/dy")
 短视频_tab1 = 短视频_page.get_tab()
@@ -39,10 +45,17 @@ print(a)
 短视频_tab1.wait.doc_loaded()
 # -----------------------------------
 co_qd = ChromiumOptions().auto_port()  # 指定程序每次使用空闲的端口和临时用户文件夹创建浏览器
+<<<<<<< HEAD
 # co_qd.headless(True)  # 无头模式
 # co_qd.set_argument('--no-sandbox')  # 无沙盒模式
 # co_qd.set_argument('--headless=new')  # 无界面系统添加
 # co_qd.set_paths(browser_path="/usr/bin/google-chrome")  # 设置浏览器路径
+=======
+co_qd.headless(True)  # 无头模式
+co_qd.set_argument('--no-sandbox')  # 无沙盒模式
+co_qd.set_argument('--headless=new')  # 无界面系统添加
+co_qd.set_paths(browser_path="/usr/bin/google-chrome")  # 设置浏览器路径
+>>>>>>> e087e014910e90fe51c437b9f2755d67175880e0
 page_qd = ChromiumPage(co_qd)
 
 page_qd.get("https://om.tencent.com/attendances/check_out/23301583")

@@ -25,7 +25,10 @@ def run_main_server():
 if __name__ == '__main__':
     cprint.info(Bot_Logo.strip())
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> e087e014910e90fe51c437b9f2755d67175880e0
     # 创建并启动 MainServer 线程
     main_server_thread = threading.Thread(target=run_main_server)
     main_server_thread.start()
