@@ -59,6 +59,7 @@ class MainServer:
                     Thread(target=self.Rmh.mainHandle, args=(msg,)).start()
                 # 好友消息处理
                 # if '@chatroom' not in msg.roomid and 'gh_' not in msg.sender:
+                # if '@chatroom' not in msg.roomid and 'gh_' not in msg.sender and msg.roomid in ["wxid_cl7ri553olno22"]:
                 #     Thread(target=self.Fmh.mainHandle, args=(msg,)).start()
                 # else:
                 #     pass
