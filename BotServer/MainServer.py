@@ -1,3 +1,4 @@
+from BotServer.BotFunction.InterfaceFunction import getIdName
 from BotServer.MsgHandleServer.FriendMsgHandle import FriendMsgHandle
 from BotServer.MsgHandleServer.RoomMsgHandle import RoomMsgHandle
 from PushServer.PushMainServer import PushMainServer
@@ -8,9 +9,9 @@ from OutPut.outPut import op
 from cprint import cprint
 from queue import Empty
 from wcferry import Wcf
-import re
+from line_profiler import LineProfiler
 
-
+lp = LineProfiler()
 class MainServer:
     def __init__(self):
         self.wcf = Wcf()
@@ -41,27 +42,41 @@ class MainServer:
             """.replace(' ', ''))
 
     def processMsg(self, ):
+        profiler = LineProfiler()
+        profiled_function = profiler(self.isLogin)
+        profiled_function()
+
         # 判断是否登录
-        self.isLogin()
+        # self.isLogin()
+        # 输出结果
+        profiler.print_stats()
         # self.wcf.query_sql('', '')
         while self.wcf.is_receiving_msg():
             try:
                 msg = self.wcf.get_msg()
                 # 调试专用
                 # op(f'[*]: 接收到消息: {msg}')
-                op(f'[*]: 接收到消息\n[*]: 群聊ID: {msg.roomid}\n[*]: 发送人ID: {msg.sender}\n[*]: 发送内容: {msg.content}\n--------------------')
-                # 群聊消息处理
-                # if '@chatroom' in msg.roomid and msg.roomid in ['57471680941@chatroom', '57240198127@chatroom',
-                #                                                 '38886199012@chatroom',
-                #                                                 "48302252369@chatroom", "34494414197@chatroom"]:
-                # 承诺不打游戏，前端交流群，gp交流群，赚钱大业,跑步干饭小分队
-                if '@chatroom' in msg.roomid:
-                    Thread(target=self.Rmh.mainHandle, args=(msg,)).start()
-                # 好友消息处理
-                # if '@chatroom' not in msg.roomid and 'gh_' not in msg.sender and msg.roomid in ["wxid_ep8bhx9d5j7l21","wxid_cl7ri553olno22"]:
-                #     Thread(target=self.Fmh.mainHandle, args=(msg,)).start()
-                # else:
-                #     pass
+                if "@openim" not in msg.content:
+                    roomName = getIdName(self.wcf, msg.roomid)
+                    senderName = getIdName(self.wcf, msg.sender)
+                    # op(f'[*]: 接收到消息\n[*]: 群聊ID: {msg.roomid}\n[*]: 发送人ID: {msg.sender}\n[*]: 发送内容: {msg.content}\n--------------------')
+                    if '<msg>' in msg.content:
+                        try:
+                            op(f'[*]: 接收到消息\n[*]: 群聊ID: {roomName}--{msg.roomid}\n[*]: 发送人ID: {senderName}--{msg.sender}\n[*]: 发送内容: {msg.content.split('<?xml version="1.0"?>\n<msg>\n\t')[1].split(" ")[0][1:]}\n--------------------')    
+                        except Exception as e:
+                            op(f'[*]: 接收到消息\n[*]: 群聊ID: {roomName}--{msg.roomid}\n[*]: 发送人ID: {senderName}--{msg.sender}\n[*]: 发送内容: {msg.content}\n--------------------')
+                    elif "gh_" in msg.sender:
+                        op(f'[*]: 接收到消息\n[*]: 群聊ID: {roomName}--{msg.roomid}\n[*]: 发送人ID: {senderName}--{msg.sender}\n[*]: 发送内容: 忽略\n--------------------')
+                    else:
+                        op(f'[*]: 接收到消息\n[*]: 群聊ID: {roomName}--{msg.roomid}\n[*]: 发送人ID: {senderName}--{msg.sender}\n[*]: 发送内容: {msg.content}\n--------------------')
+                    # 群聊消息处理
+                    if '@chatroom' in msg.roomid:
+                        Thread(target=self.Rmh.mainHandle, args=(msg,)).start()
+                    # 好友消息处理
+                    # if '@chatroom' not in msg.roomid and 'gh_' not in msg.sender and msg.roomid in ["wxid_ep8bhx9d5j7l21","wxid_cl7ri553olno22"]:
+                    #     Thread(target=self.Fmh.mainHandle, args=(msg,)).start()
+                    # else:
+                    #     pass
             except Empty:
                 continue
 

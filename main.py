@@ -30,5 +30,5 @@ if __name__ == '__main__':
     main_server_thread.start()
 
     # 等待两个线程完成
-    run_app()
+    # run_app()
     main_server_thread.join()

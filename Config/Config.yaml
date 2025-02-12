@@ -174,8 +174,18 @@ adminFunctionWord:
     - '发'
     - '发送'
 
+userFeatureWord:
+  addUserFeatureWord:
+    - '添加用户功能'
+    - '增加用户功能'
 
-
+  delUserFeatureWord:
+    - '删除用户功能'
+    - '取出用户功能'
+    
+  searchUserFeatureWord:
+    - '查询用户功能'
+    - '查看用户功能'
 
 ## 积分功能配置
 pointConfig:
