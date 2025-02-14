@@ -408,7 +408,7 @@ apiServer:
     # Kimi大模型
     kiMi:
       kiMiApi: 'https://api.moonshot.cn/v1/chat/completions'
-      kiMiKey: 'sk-'
+      kiMiKey: 'sk-nTp14o0uYx3tfJWRMUmoM1TifXTgFi71In4bc2GfB2wLrdPW'
     # 智谱大模型
     bigModel:
       bigModelApi: 'https://open.bigmodel.cn/api/paas/v4/chat/completions'
@@ -433,7 +433,8 @@ apiServer:
   # 舔狗日记API
   dogApi: 'https://apis.tianapi.com/tiangou/index?key={}'
   # 摸鱼日记API
-  fishApi: 'https://api.j4u.ink/v1/store/redirect/moyu/calendar/today.png'
+#  fishApi: 'https://api.j4u.ink/v1/store/redirect/moyu/calendar/today.png'
+  fishApi: 'https://dayu.qqsuu.cn/moyuribao/apis.php'
   # 疯狂星期四文案Api
   kfcApi: 'https://api.pearktrue.cn/api/kfc'
   # Cmd5解密Api配置
