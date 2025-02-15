@@ -17,7 +17,7 @@ class DbUserServer:
         conn, cursor = Dds.openDb(Cs.returnUserDbPath())
         try:
             if not self.searchAdmin(wxId, roomId):
-                cursor.execute('INSERT INTO Admin VALUES (?, ?)', (wxId, roomId))
+                cursor.execute(f'INSERT INTO Admin VALUES ({wxId}, {roomId})')
                 conn.commit()
                 Dds.closeDb(conn, cursor)
                 return True
@@ -76,7 +76,7 @@ class DbUserServer:
         conn, cursor = Dds.openDb(Cs.returnUserDbPath())
         try:
             if not self.searchFeature(name):
-                cursor.execute(f'INSERT INTO Feature VALUES ({name}, {description})')
+                cursor.execute(f"INSERT INTO Feature VALUES ({name},{description})")
                 conn.commit()
                 Dds.closeDb(conn, cursor)
                 return True
@@ -89,7 +89,7 @@ class DbUserServer:
     def delFeature(self, name):
         conn, cursor = Dds.openDb(Cs.returnUserDbPath())
         try:
-            cursor.execute('DELETE FROM Feature WHERE name=?', (name))
+            cursor.execute(f'DELETE FROM Feature WHERE name={name}')
             conn.commit()
             Dds.closeDb(conn, cursor)
             return True
