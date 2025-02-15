@@ -15,10 +15,16 @@ import json
 
 
 class AiDialogue:
-    def __init__(self):
-
+    def __init__(self, kiMiConfig = {
+            "kiMiApi": "https://api.moonshot.cn/v1/chat/completions",
+            'kiMiKey': "你的kimy_apikey"
+        }, deepSeekConfig={
+            'deepSeekApi': "https://api.deepseek.com/chat/completions",
+            'deepSeekKey': "你的ds_apikey",
+        }):
         configData = Cs.returnConfigData()
-        self.systemAiRole = configData['apiServer']['aiConfig']['systemAiRule']
+        # self.systemAiRole = configData['apiServer']['aiConfig']['systemAiRule']
+        self.systemAiRole =  '你叫N助手, 你的主人是N.先生, 是一名python开发工程师'
         self.openAiConfig = {'openAiApi': configData['apiServer']['aiConfig']['openAi']['openAiApi'],
                              'openAiKey': configData['apiServer']['aiConfig']['openAi']['openAiKey']}
         self.sparkAiConfig = {'sparkAiApi': configData['apiServer']['aiConfig']['sparkApi']['sparkAiApi'],
@@ -38,18 +44,20 @@ class AiDialogue:
             'hunYuanSecretId': configData['apiServer']['aiConfig']['hunYuan']['hunYuanSecretId'],
             'hunYuanSecretKey': configData['apiServer']['aiConfig']['hunYuan']['hunYuanSecretKey']
         }
-        self.kiMiConfig = {
-            'kiMiApi': configData['apiServer']['aiConfig']['kiMi']['kiMiApi'],
-            'kiMiKey': configData['apiServer']['aiConfig']['kiMi']['kiMiKey']
-        }
+        # self.kiMiConfig = {
+        #     'kiMiApi': configData['apiServer']['aiConfig']['kiMi']['kiMiApi'],
+        #     'kiMiKey': configData['apiServer']['aiConfig']['kiMi']['kiMiKey']
+        # }
+        self.kiMiConfig = kiMiConfig
         self.bigModelConfig = {
             'bigModelApi': configData['apiServer']['aiConfig']['bigModel']['bigModelApi'],
             'bigModelKey': configData['apiServer']['aiConfig']['bigModel']['bigModelKey'],
         }
-        self.deepSeekConfig = {
-            'deepSeekApi': configData['apiServer']['aiConfig']['deepSeek']['deepSeekApi'],
-            'deepSeekKey': configData['apiServer']['aiConfig']['deepSeek']['deepSeekKey'],
-        }
+        # self.deepSeekConfig = {
+        #     'deepSeekApi': configData['apiServer']['aiConfig']['deepSeek']['deepSeekApi'],
+        #     'deepSeekKey': configData['apiServer']['aiConfig']['deepSeek']['deepSeekKey'],
+        # }
+        self.deepSeekConfig = deepSeekConfig
         self.openAiMessages = [{"role": "system", "content": f'{self.systemAiRole}'}]
         self.qianFanMessages = [{"role": "system", "content": f'{self.systemAiRole}'}]
         self.hunYuanMessages = [{"Role": "system", "Content": f'{self.systemAiRole}'}]
@@ -428,7 +436,8 @@ class AiDialogue:
         """
         result = ''
         for i in range(1, 8):
-            aiModule = self.aiPriority.get(i)
+            # aiModule = self.aiPriority.get(i)
+            aiModule = "kiMi"
             if aiModule == 'hunYuan':
                 result, self.hunYuanMessages = self.getHunYuanAi(content, self.hunYuanMessages)
             if aiModule == 'sparkAi':
@@ -471,10 +480,12 @@ class AiDialogue:
 
 if __name__ == '__main__':
     messages = []
-    Ad = AiDialogue()
+    Ad = AiDialogue(kiMiConfig={
+        "kiMiApi": "https://api.moonshot.cn/v1/chat/completions",
+        'kiMiKey': "sk-....."})
     # print(Ad.getPicAi('画一只布尔猫'))
     while 1:
-        print(Ad.getAi(input('>> ')))
+        print(Ad.getAi("请你介绍一下你自己"))           #请你介绍一下你自己
     # Ad.getAi(1)
     # while 1:
     #     content, messages = Ad.getHunYuanAi(input(), messages)
