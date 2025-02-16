@@ -7,6 +7,7 @@ from queue import Queue
 from DrissionPage import ChromiumPage, ChromiumOptions
 from threading import Thread
 import time
+import asyncio
 
 # 创建 FastAPI 应用实例
 app = FastAPI()
@@ -59,10 +60,10 @@ def consumer(tab1, q):
         while "a" not in res and count < 5:
             count += 1
             tab1.ele("#downloadButton").click('js')  # 点击查询
-            tab1.wait.doc_loaded()
-            tab1.wait.ele_hidden("#waitAnimation")  # 等待查询结果
-            time.sleep(1)
-            tab1.ele("#downloadButton").click('js')
+            # tab1.wait.doc_loaded()
+            # tab1.wait.ele_hidden("#waitAnimation")  # 等待查询结果
+            # time.sleep(1)
+            # tab1.ele("#downloadButton").click('js')
             source = tab1.ele('tag:source')
             images = tab1.eles('.preview-image')
             if source:
@@ -132,7 +133,7 @@ async def 短视频爬虫(item: Dict[str, Any]):
             return {
                 "data": re
                 }
-        time.sleep(0.1)
+        await asyncio.sleep(0.1)
 
 
 @app.post("/wc")
