@@ -15,13 +15,7 @@ import json
 
 
 class AiDialogue:
-    def __init__(self, kiMiConfig = {
-            "kiMiApi": "https://api.moonshot.cn/v1/chat/completions",
-            'kiMiKey': "你的kimy_apikey"
-        }, deepSeekConfig={
-            'deepSeekApi': "https://api.deepseek.com/chat/completions",
-            'deepSeekKey': "你的ds_apikey",
-        }):
+    def __init__(self):
         configData = Cs.returnConfigData()
         # self.systemAiRole = configData['apiServer']['aiConfig']['systemAiRule']
         self.systemAiRole =  '你叫N助手, 你的主人是N.先生, 是一名python开发工程师'
@@ -44,20 +38,18 @@ class AiDialogue:
             'hunYuanSecretId': configData['apiServer']['aiConfig']['hunYuan']['hunYuanSecretId'],
             'hunYuanSecretKey': configData['apiServer']['aiConfig']['hunYuan']['hunYuanSecretKey']
         }
-        # self.kiMiConfig = {
-        #     'kiMiApi': configData['apiServer']['aiConfig']['kiMi']['kiMiApi'],
-        #     'kiMiKey': configData['apiServer']['aiConfig']['kiMi']['kiMiKey']
-        # }
-        self.kiMiConfig = kiMiConfig
+        self.kiMiConfig = {
+            'kiMiApi': configData['apiServer']['aiConfig']['kiMi']['kiMiApi'],
+            'kiMiKey': configData['apiServer']['aiConfig']['kiMi']['kiMiKey']
+        }
         self.bigModelConfig = {
             'bigModelApi': configData['apiServer']['aiConfig']['bigModel']['bigModelApi'],
             'bigModelKey': configData['apiServer']['aiConfig']['bigModel']['bigModelKey'],
         }
-        # self.deepSeekConfig = {
-        #     'deepSeekApi': configData['apiServer']['aiConfig']['deepSeek']['deepSeekApi'],
-        #     'deepSeekKey': configData['apiServer']['aiConfig']['deepSeek']['deepSeekKey'],
-        # }
-        self.deepSeekConfig = deepSeekConfig
+        self.deepSeekConfig = {
+            'deepSeekApi': configData['apiServer']['aiConfig']['deepSeek']['deepSeekApi'],
+            'deepSeekKey': configData['apiServer']['aiConfig']['deepSeek']['deepSeekKey'],
+        }
         self.openAiMessages = [{"role": "system", "content": f'{self.systemAiRole}'}]
         self.qianFanMessages = [{"role": "system", "content": f'{self.systemAiRole}'}]
         self.hunYuanMessages = [{"Role": "system", "Content": f'{self.systemAiRole}'}]
@@ -436,8 +428,7 @@ class AiDialogue:
         """
         result = ''
         for i in range(1, 8):
-            # aiModule = self.aiPriority.get(i)
-            aiModule = "kiMi"
+            aiModule = self.aiPriority.get(i)
             if aiModule == 'hunYuan':
                 result, self.hunYuanMessages = self.getHunYuanAi(content, self.hunYuanMessages)
             if aiModule == 'sparkAi':
