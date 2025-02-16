@@ -98,7 +98,7 @@ class FriendMsgHandle:
             if judgeSplitAllEqualWord(content, self.sendMsgKeyWords):
                 Thread(target=self.sendFriendMsg, args=(content,)).start()
             # 好友消息转发给超级管理员 超级管理员不触发
-            if sender not in self.Administrators and self.msgForwardAdmin:
+            if sender in self.Administrators and self.msgForwardAdmin:
                 Thread(target=self.forwardMsgToAdministrators, args=(sender, content)).start()
         # 转发公众号消息到推送群聊 超管有效
         if msg.type == 49:
