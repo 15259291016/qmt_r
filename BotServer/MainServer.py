@@ -42,14 +42,14 @@ class MainServer:
             """.replace(' ', ''))
 
     def processMsg(self, ):
-        profiler = LineProfiler()
-        profiled_function = profiler(self.isLogin)
-        profiled_function()
+        # profiler = LineProfiler()
+        # profiled_function = profiler(self.isLogin)
+        # profiled_function()
 
         # 判断是否登录
-        # self.isLogin()
+        self.isLogin()
         # 输出结果
-        profiler.print_stats()
+        # profiler.print_stats()
         # self.wcf.query_sql('', '')
         while self.wcf.is_receiving_msg():
             try:
