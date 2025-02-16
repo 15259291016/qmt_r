@@ -62,7 +62,7 @@ class MainServer:
                     # op(f'[*]: 接收到消息\n[*]: 群聊ID: {msg.roomid}\n[*]: 发送人ID: {msg.sender}\n[*]: 发送内容: {msg.content}\n--------------------')
                     if '<msg>' in msg.content:
                         try:
-                            op(f'[*]: 接收到消息\n[*]: 群聊ID: {roomName}--{msg.roomid}\n[*]: 发送人ID: {senderName}--{msg.sender}\n[*]: 发送内容: {msg.content.split('<?xml version="1.0"?>\n<msg>\n\t')[1].split(" ")[0][1:]}\n--------------------')    
+                            op(f'[*]: 接收到消息\n[*]: 群聊ID: {roomName}--{msg.roomid}\n[*]: 发送人ID: {senderName}--{msg.sender}\n[*]: 发送内容: msg\n--------------------')    
                         except Exception as e:
                             op(f'[*]: 接收到消息\n[*]: 群聊ID: {roomName}--{msg.roomid}\n[*]: 发送人ID: {senderName}--{msg.sender}\n[*]: 发送内容: {msg.content}\n--------------------')
                     elif "gh_" in msg.sender:
