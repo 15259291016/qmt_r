@@ -23,7 +23,7 @@ q = Queue()
 签到信息队列 = Queue()
 res = dict()
 签到结果字典 = dict()
-短视频_tab1('x://html/body/div[1]/nav/div/div/ul[2]/li[1]/a').click('js')  # 简化写法
+短视频_tab1('x://html/body/div[2]/nav/div/div/ul[2]/li[2]/a').click('js')  # 简化写法
 jym = 短视频_tab1.ele('#verifyImg', timeout=5).src
 jym_str = ""
 while jym_str == "":
