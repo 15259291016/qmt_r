@@ -25,16 +25,6 @@ q = Queue()
 res = dict()
 签到结果字典 = dict()
 短视频_tab1('x://html/body/div[2]/nav/div/div/ul[2]/li[2]/a').click('js')  # 简化写法
-<<<<<<< Updated upstream
-jym = 短视频_tab1.ele('#verifyImg', timeout=5).src
-jym_str = ""
-while jym_str == "":
-    jym_str = str(jym).split(" ")[8][5:-1]
-    print(jym_str)
-    time.sleep(1)
-a = input("请输入一个值:")
-print(a)
-=======
 # jym = 短视频_tab1.ele('#verifyImg', timeout=5).src
 # jym_str = ""
 # while jym_str == "":
@@ -43,7 +33,6 @@ print(a)
 #     time.sleep(1)
 # a = input("请输入一个值:")
 # print(a)
->>>>>>> Stashed changes
 
 短视频_tab1.ele("#account").input("19026045487")
 短视频_tab1.ele("#password").input("6116988.niu")
