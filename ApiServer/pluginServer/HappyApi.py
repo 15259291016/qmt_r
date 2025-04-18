@@ -137,7 +137,7 @@ class HappyApi:
                 imagesurl = videoData.get('imagesurl')
                 savePath_list = []
                 for img in imagesurl:
-                    savePath = Fcs.returnVideoCacheFolder() + '/' + str(int(time.time() * 1000)) + '.jpg'
+                    savePath = Fcs.returnPicCacheFolder() + '/' + str(int(time.time() * 1000)) + '.jpg'
                     savePath_list.append(self.downloadFile(img, savePath))
                 if savePath_list:
                     return savePath_list, info_type

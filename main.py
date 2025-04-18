@@ -2,20 +2,18 @@ from BotServer.MainServer import MainServer
 from cprint import cprint
 import uvicorn
 import threading
+from modules.fapp.app import app
 
 Bot_Logo = """
     _______  _______  _______  _______  _______  _______  _______  _______
 """
 
-
 def run_app():
     try:
-        from modules.fapp.app import app
         uvicorn.run(app, host="0.0.0.0", port=8000)
-        print("成功启动")
+        print("成功启动 Python 项目")
     except ImportError as e:
         print(e)
-
 
 def run_main_server():
     Ms = MainServer()
@@ -29,6 +27,5 @@ if __name__ == '__main__':
     main_server_thread = threading.Thread(target=run_main_server)
     main_server_thread.start()
 
-    # 等待两个线程完成
     run_app()
     main_server_thread.join()

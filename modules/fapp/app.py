@@ -8,6 +8,7 @@ from DrissionPage import ChromiumPage, ChromiumOptions
 from threading import Thread
 import time
 import asyncio
+# from .fapp.routers import room
 
 # 创建 FastAPI 应用实例
 app = FastAPI()
@@ -24,6 +25,7 @@ q = Queue()
 res = dict()
 签到结果字典 = dict()
 短视频_tab1('x://html/body/div[2]/nav/div/div/ul[2]/li[2]/a').click('js')  # 简化写法
+<<<<<<< Updated upstream
 jym = 短视频_tab1.ele('#verifyImg', timeout=5).src
 jym_str = ""
 while jym_str == "":
@@ -32,18 +34,28 @@ while jym_str == "":
     time.sleep(1)
 a = input("请输入一个值:")
 print(a)
+=======
+# jym = 短视频_tab1.ele('#verifyImg', timeout=5).src
+# jym_str = ""
+# while jym_str == "":
+#     jym_str = str(jym).split(" ")[8][5:-1]
+#     print(jym_str)
+#     time.sleep(1)
+# a = input("请输入一个值:")
+# print(a)
+>>>>>>> Stashed changes
 
 短视频_tab1.ele("#account").input("19026045487")
 短视频_tab1.ele("#password").input("6116988.niu")
-短视频_tab1.ele("#imgCode").input(a)
+# 短视频_tab1.ele("#imgCode").input(a)
 短视频_tab1.ele("#get_login").click('js')
 短视频_tab1.wait.doc_loaded()
 # -----------------------------------
 co_qd = ChromiumOptions().auto_port()  # 指定程序每次使用空闲的端口和临时用户文件夹创建浏览器
-# co_qd.headless(True)  # 无头模式
-# co_qd.set_argument('--no-sandbox')  # 无沙盒模式
-# co_qd.set_argument('--headless=new')  # 无界面系统添加
-# co_qd.set_paths(browser_path="/usr/bin/google-chrome")  # 设置浏览器路径
+co_qd.headless(True)  # 无头模式
+co_qd.set_argument('--no-sandbox')  # 无沙盒模式
+co_qd.set_argument('--headless=new')  # 无界面系统添加
+co_qd.set_paths(browser_path="/usr/bin/google-chrome")  # 设置浏览器路径
 page_qd = ChromiumPage(co_qd)
 
 page_qd.get("https://om.tencent.com/attendances/check_out/23301583")
@@ -235,5 +247,6 @@ async def tjwc(item: Dict[str, Any]):
         "data": str(res)
         }
 
+# app.include_router(room.router)
 Thread(target=consumer, args=(短视频_tab1, q)).start()          # chrome浏览器
 # Thread(target=上班下班线程, args=(tab1_qd, 签到信息队列)).start()          # chrome浏览器
